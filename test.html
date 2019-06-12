@@ -1,0 +1,11 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+      const hash = window.location.hash.slice(1);
+      const params = new URLSearchParams(hash);
+      console.log(params.get('access_token'));
+    </script>
+  </body>
+</html>
