@@ -14,7 +14,7 @@ auth_code_endpoint = '/authorization-code-callback'
 impl_grant_endpoint = '/implicit-grant-callback'
 
 @app.route('/')
-def test():
+def index():
   params = parse_qs(request.query_string)
   implicit = params[b'implicit'][0].decode() == 'true'
   endpoint = 'https://accounts.spotify.com/authorize?'
@@ -27,6 +27,21 @@ def test():
     'show_dialog': 'true' 
   }
   return redirect(endpoint + urlencode(params))
+
+@app.route('/test')
+def test():
+  endpoint = 'https://accounts.spotify.com/api/token'
+  params = {
+    'grant_type': 'client_credentials',
+  }
+  req = Request(url=endpoint, method='POST',
+    data=urlencode(params).encode(),
+    headers={
+      'Authorization': 'Basic ' + base64.b64encode((CLIENT_ID + ':' + CLIENT_SECRET).encode()).decode()
+    })
+  with urlopen(req) as f:
+    res = f.read()
+    return res
 
 @app.route('/implicit-grant-callback')
 def implicit_grant_callback():
