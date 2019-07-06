@@ -1,0 +1,26 @@
+.app-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 250px auto;
+  grid-template-rows: auto 100px;
+  grid-template-areas:
+    "left-menu main"
+    "player player";
+}
+.left-menu {
+  background: gray;
+  grid-area: left-menu;
+}
+.main {
+  overflow: scroll;
+  background: lightgray;
+  grid-area: main;
+}
+.player-control {
+  background: black;
+  grid-area: player;
+}
