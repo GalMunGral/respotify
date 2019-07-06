@@ -8,7 +8,9 @@ export default class Player extends Component {
       this.player = new window.Spotify.Player({
         name: 'Test Player',
         getOAuthToken: callback => {
-          callback('BQCEt_Kodj-CQlhaNqrIY68kiF_OQke40Hq9xYJrDb0jKSg9oloQP__8AeShi9b8ub_mmuCWnetRvknCjpmV1JnRxusO-wWXMOEuf6cWJA6LV-z4SIVvQGyTZ4qXyWP4sifDQUje6NdFL-x-g2-q-cco5kvVFLCVbdpcMwE1El-DWKkX-0-LOK2N');
+          // TODO: Refresh token if needed
+          let searchParams = new URLSearchParams(window.location.search);
+          callback(searchParams.get('access_token'));
         },
         volume: 1
       });
