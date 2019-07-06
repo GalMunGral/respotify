@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Row from './layout/Row';
 
 export default class Player extends Component {
   componentDidMount() {
@@ -29,9 +30,10 @@ export default class Player extends Component {
     s.async = true;
     document.body.append(s);
   }
-  render() {
-    return (
-      <div className="player-control">
+
+  _renderControlButtons() {
+    return  (
+      <div>
         <button onClick={() => {
           this.player.togglePlay().then(() => {
             console.log('Paused!');
@@ -42,12 +44,22 @@ export default class Player extends Component {
             console.log('Resumed!');
           });
         }}>Previous</button>
-         <button onClick={() => {
+        <button onClick={() => {
           this.player.nextTrack().then(() => {
             console.log('Resumed!');
           });
         }}>Next</button>
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <Row className="player-control">
+        <div className="light-text">LEFT</div>
+        {this._renderControlButtons()}
+        <div className="light-text">RIGHT</div>
+      </Row>
     );
   }
 }
