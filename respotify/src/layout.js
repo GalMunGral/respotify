@@ -6,7 +6,7 @@ export function Column(props) {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: props.justifyContent || 'space-between',
-    alignItems: 'center'
+    alignItems: props.alignItems || 'center'
   };
   if (props.style) Object.assign(style, props.style);
 
@@ -23,7 +23,7 @@ export function Row(props) {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: props.justifyContent || 'space-between',
-    alignItems: 'center'
+    alignItems: props.alignItems || 'center'
   };
   if (props.style) Object.assign(style, props.style);
 

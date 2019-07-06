@@ -41,8 +41,8 @@ export default class Player extends Component {
           margin: 10
         }}></div>
         <div>
-          <div class="thumbnail-title">Yo</div>
-          <div class="thumbnail-subtitle">hey</div>
+          <div className="thumbnail-title">Yo</div>
+          <div className="thumbnail-subtitle">hey</div>
         </div>
       </Row>
       
@@ -51,27 +51,27 @@ export default class Player extends Component {
 
   _renderPlaybackControl() {
     return  (
-      <Row>
+      <Row style={{ marginTop: 5 }}>
         <div onClick={() => this.player.previousTrack()}>
-          <i class="material-icons clickable" style={{
-            fontSize: 24,
+          <i className="material-icons clickable" style={{
+            fontSize: 24
           }}>skip_previous</i>
         </div>
 
         <div onClick={() => this.player.togglePlay()}>
-          <i class="material-icons clickable" style={{
+          <i className="material-icons clickable" style={{
             fontSize: 24,
             height: 24,
             width: 24,
             padding: 5,
-            margin: '5px 20px',
+            margin: '0 20px',
             borderRadius: 24 / 2 + 5,
             border: '1px solid'
           }}>pause</i>
         </div>
 
         <div onClick={() => this.player.nextTrack()}>
-          <i class="material-icons clickable" style={{
+          <i className="material-icons clickable" style={{
             fontSize: 24,
           }}>skip_next</i>
         </div>
@@ -81,10 +81,14 @@ export default class Player extends Component {
 
   _renderProgressBar() {
     return (
-      <div style={{ width: 500, position: 'relative' }}>
-      <div style={{position: 'absolute', top: 0, margin: 5, height:3, width: 500, background: '#404040'}}></div>
-      <div style={{position: 'absolute', top: 0, margin: 5, height:3, width: 250, background: 'green'}}></div>
-      </div>
+      <Row alignItems="start">
+        <div className="small-text">some time</div>
+        <div style={{position: 'relative', margin: 5, height:3, width: 500, background: '#404040'}}>
+          <div style={{position: 'absolute', top: 0, height:3, width: 250, background: 'green'}}></div>
+        </div>
+        <div className="small-text">total time</div>
+      </Row>
+     
     )
   }
 
@@ -98,7 +102,7 @@ export default class Player extends Component {
     return (
       <Row className="player-control">
         {this._renderThumbnail()}
-        <Column justifyContent="start" style={{ alignSelf: 'stretch' }}>
+        <Column justifyContent="start" style={{ alignSelf: 'stretch', padding: 0 }}>
           {this._renderPlaybackControl()}
           {this._renderProgressBar()}
         </Column>
