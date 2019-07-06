@@ -23,7 +23,7 @@ def index():
     'response_type': 'token' if implicit else 'code',
     'redirect_uri': HOST + (impl_grant_endpoint if implicit else auth_code_endpoint),
     'state': randint(0, 1000000),
-    'scope': 'user-read-private playlist-read-private',
+    'scope': 'user-read-private playlist-read-private user-follow-read user-read-currently-playing',
     'show_dialog': 'true' 
   }
   return redirect(endpoint + urlencode(params))

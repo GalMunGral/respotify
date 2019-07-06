@@ -21,6 +21,6 @@
   grid-area: main;
 }
 .player-control {
-  background: black;
+  background: #282828;
   grid-area: player;
 }

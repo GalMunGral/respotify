@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Player from './Player';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <div className="main">
         { 'a '.repeat(10 ** 4) }
       </div>
-      <div className="player-control"></div>
+      <Player></Player>
     </div>
   );
 }
