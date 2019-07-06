@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Row from './layout/Row';
+import { Row, Column } from './layout';
 
 export default class Player extends Component {
   componentDidMount() {
@@ -31,34 +31,78 @@ export default class Player extends Component {
     document.body.append(s);
   }
 
-  _renderControlButtons() {
-    return  (
-      <div>
-        <button onClick={() => {
-          this.player.togglePlay().then(() => {
-            console.log('Paused!');
-          });
-        }}>Pause</button>
-        <button onClick={() => {
-          this.player.previousTrack().then(() => {
-            console.log('Resumed!');
-          });
-        }}>Previous</button>
-        <button onClick={() => {
-          this.player.nextTrack().then(() => {
-            console.log('Resumed!');
-          });
-        }}>Next</button>
-      </div>
+  _renderThumbnail() {
+    return (
+      <Row justifyContent="start" style={{ width: 100, padding: 0 }}>
+        <div style={{
+          background: 'white',
+          width: 50,
+          height: 50,
+          margin: 10
+        }}></div>
+        <div>
+          <div class="thumbnail-title">Yo</div>
+          <div class="thumbnail-subtitle">hey</div>
+        </div>
+      </Row>
+      
     );
+  }
+
+  _renderPlaybackControl() {
+    return  (
+      <Row>
+        <div onClick={() => this.player.previousTrack()}>
+          <i class="material-icons clickable" style={{
+            fontSize: 24,
+          }}>skip_previous</i>
+        </div>
+
+        <div onClick={() => this.player.togglePlay()}>
+          <i class="material-icons clickable" style={{
+            fontSize: 24,
+            height: 24,
+            width: 24,
+            padding: 5,
+            margin: '5px 20px',
+            borderRadius: 24 / 2 + 5,
+            border: '1px solid'
+          }}>pause</i>
+        </div>
+
+        <div onClick={() => this.player.nextTrack()}>
+          <i class="material-icons clickable" style={{
+            fontSize: 24,
+          }}>skip_next</i>
+        </div>
+      </Row>
+    );
+  }
+
+  _renderProgressBar() {
+    return (
+      <div style={{ width: 500, position: 'relative' }}>
+      <div style={{position: 'absolute', top: 0, margin: 5, height:3, width: 500, background: '#404040'}}></div>
+      <div style={{position: 'absolute', top: 0, margin: 5, height:3, width: 250, background: 'green'}}></div>
+      </div>
+    )
+  }
+
+  _renderVolumeControl() {
+    return <div style={{
+      width: 100,
+    }}>{/* placeholder */}</div>;
   }
 
   render() {
     return (
       <Row className="player-control">
-        <div className="light-text">LEFT</div>
-        {this._renderControlButtons()}
-        <div className="light-text">RIGHT</div>
+        {this._renderThumbnail()}
+        <Column justifyContent="start" style={{ alignSelf: 'stretch' }}>
+          {this._renderPlaybackControl()}
+          {this._renderProgressBar()}
+        </Column>
+        {this._renderVolumeControl()}
       </Row>
     );
   }
