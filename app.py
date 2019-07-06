@@ -13,7 +13,10 @@ HOST = 'http://localhost:5000'
 auth_code_endpoint = '/authorization-code-callback'
 impl_grant_endpoint = '/implicit-grant-callback'
 
-@app.route('/')
+# See https://developer.spotify.com/documentation/web-playback-sdk/quick-start/
+scopes = ['streaming', 'user-read-birthdate', 'user-read-email', 'user-read-private'] 
+
+@app.route('/authorize')
 def index():
   params = parse_qs(request.query_string)
   implicit = params[b'implicit'][0].decode() == 'true'
@@ -23,7 +26,7 @@ def index():
     'response_type': 'token' if implicit else 'code',
     'redirect_uri': HOST + (impl_grant_endpoint if implicit else auth_code_endpoint),
     'state': randint(0, 1000000),
-    'scope': 'user-read-private playlist-read-private user-follow-read user-read-currently-playing',
+    'scope': ' '.join(scopes),
     'show_dialog': 'true' 
   }
   return redirect(endpoint + urlencode(params))
@@ -62,6 +65,12 @@ def auth_code_callback():
     headers={
       'Authorization': 'Basic ' + base64.b64encode((CLIENT_ID + ':' + CLIENT_SECRET).encode()).decode()
     })
+
   with urlopen(req) as f:
-    res = f.read()
-    return res
+    res = json.loads(f.read().decode('utf8'))
+    endpoint = 'http://localhost:3000/?'
+    params = {
+      'access_token': res['access_token'],
+      'refresh_token': res['refresh_token']
+    }
+    return redirect(endpoint + urlencode(params))
