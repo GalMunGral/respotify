@@ -13,28 +13,27 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    const artists = {
-      'Sublab': '3tjRdPCZTpme7vslZJYtJx',
-      'Hebe Tien 田馥甄': '14bJhryXGk6H6qlGzwj3W5',
-      'Mamamoo': '0XATRDCYuuGhk0oE7C0o5G'
-    };
-    for (let [artistName, artistId] of Object.entries(artists)) {
+    const artists = [
+      ['Sublab', '3tjRdPCZTpme7vslZJYtJx'],
+      ['Hebe Tien 田馥甄', '14bJhryXGk6H6qlGzwj3W5'],
+      ['Mamamoo', '0XATRDCYuuGhk0oE7C0o5G']
+    ];
+
+    let promises = artists.map(([artistName, artistId]) =>
       fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
         headers: new Headers({
           'Authorization': 'Bearer ' + this.props.accessToken
         })
       }).then(res => res.json())
-      .then(json => {
-        console.log(json.items);
-        this.setState({
-          albums: [...this.state.albums, {
-            artistName: artistName,
-            items: json.items
-          }]
-        });
-      })
+      .then(json => ({
+        artistName: artistName,
+        items: json.items
+      }))
+    );
+
+    Promise.all(promises)
+      .then(albums => { this.setState({ albums }); })
       .catch(err => console.log(err));
-    }
   }
 
   render() {
