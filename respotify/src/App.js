@@ -16,7 +16,7 @@ export default class App extends Component {
             <Column alignItems="flex-start" className="left-menu">
               <Row className="left-menu-title">
                 <i className="material-icons">replay</i>
-                <h1>Respotify</h1>
+                <h1>ReSpotify</h1>
               </Row>
             </Column>
             
