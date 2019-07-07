@@ -56,20 +56,21 @@ img.thumbnail-img {
   margin: 0 5px;
   line-height: 11px;
 }
-.progress-bar-background {
+.bar-background {
   position: relative;
   margin: 5px;
   height: 4px;
   border-radius: 2px;
   background: #404040;
 }
-.progress-bar-highlight {
+.bar-highlight {
   position: absolute;
   top: 0;
   height: 4px;
   border-radius: 2px;
   background: #B3B3B3;
 }
-.progress-bar:hover .progress-bar-highlight {
+.progress-bar:hover .bar-highlight,
+.volume-bar:hover .bar-highlight {
   background: #1EB953;
 }

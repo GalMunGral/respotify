@@ -10,7 +10,8 @@ export default class Player extends Component {
       currentTrack: null,
       paused: true,
       duration: -1,
-      position: 0
+      position: 0,
+      volume: 0
     }
   }
 
@@ -29,7 +30,12 @@ export default class Player extends Component {
       this.player.addListener('authentication_error', ({ message }) => { console.error(message); });
       this.player.addListener('account_error', ({ message }) => { console.error(message); });
       this.player.addListener('playback_error', ({ message }) => { console.error(message); });
-      this.player.addListener('ready', ({ device_id }) => { console.log('Ready with Device ID', device_id); });
+      this.player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+        this.player.getVolume().then(volume => {
+          this.setState({ volume });
+        });
+      });
       this.player.addListener('not_ready', ({ device_id }) => { console.log('Device ID has gone offline', device_id); });
       this.player.addListener('player_state_changed', state => {
         // Check if playback has been paused
@@ -123,7 +129,7 @@ export default class Player extends Component {
   }
 
   _renderProgressBar() {
-    const PROGREE_BAR_WIDTH = 500;
+    const PROGRESS_BAR_WIDTH = 500;
     return (
       <Row alignItems="start" className="progress-bar">
         <div className="small-text">{
@@ -134,18 +140,18 @@ export default class Player extends Component {
         }</div>
 
         <div
-          className="progress-bar-background" 
-          style={{ width: PROGREE_BAR_WIDTH }}
+          className="bar-background" 
+          style={{ width: PROGRESS_BAR_WIDTH }}
           onClick={e => {
             let x = e.clientX;
             let element = e.nativeEvent.target;
             let boundingRect = element.getBoundingClientRect();
-            let percentage = (x - boundingRect.left) / PROGREE_BAR_WIDTH;
+            let percentage = (x - boundingRect.left) / PROGRESS_BAR_WIDTH;
             this.player.seek(this.state.duration * percentage);
           }}
         >
-          <div className="progress-bar-highlight" style={{
-            width: this.state.position / this.state.duration * PROGREE_BAR_WIDTH
+          <div className="bar-highlight" style={{
+            width: this.state.position / this.state.duration * PROGRESS_BAR_WIDTH
           }}></div>
         </div>
 
@@ -161,9 +167,33 @@ export default class Player extends Component {
   }
 
   _renderVolumeControl() {
-    return <div style={{
-      width: ITEM_WIDTH,
-    }}>{/* placeholder */}</div>;
+    const VOLUME_BAR_WIDTH = 100;
+    return (
+      <Row className="volume-bar"
+        justifyContent="flex-end"
+        alignItems="center"
+        style={{ width: ITEM_WIDTH }}
+      >
+        <i class="material-icons clickable">volume_up</i>
+        <div
+          className="bar-background"
+          style={{ width: VOLUME_BAR_WIDTH }}
+          onClick={e => {
+            let x = e.clientX;
+            let element = e.nativeEvent.target;
+            let boundingRect = element.getBoundingClientRect();
+            let volume = (x - boundingRect.left) / VOLUME_BAR_WIDTH;
+            this.player.setVolume(volume).then(() => {
+              this.setState({ volume });
+            });
+          }}
+        >
+          <div className="bar-highlight" style={{
+            width: this.state.volume * VOLUME_BAR_WIDTH
+          }}></div>
+        </div>
+      </Row>
+    );
   }
 
   render() {
