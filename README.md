@@ -1,6 +1,3 @@
 # ReSpotify
-Recreate Spotify using Spotify API and Spotify Web Playback SDK
-- **Front end**: React.js
-- **Back end**: Flask
-
+Recreate Spotify using Spotify API and Spotify Web Playback SDK. ***(front end: React.js, back end: Flask)***
 ![screenshot](respotify/screenshot.png)
