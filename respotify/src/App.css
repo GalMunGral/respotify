@@ -23,6 +23,7 @@
 .player-control {
   background: #282828;
   grid-area: player;
+  user-select: none;
 }
 .clickable {
   color: #B3B3B3;
@@ -36,7 +37,7 @@
   height: 60px;
   margin: 10px;
   background: lightgray;
-  box-shadow: 1px 1px 2px black;
+  box-shadow: 1px 1px 1px black;
 }
 img.thumbnail-img {
   object-fit: cover;

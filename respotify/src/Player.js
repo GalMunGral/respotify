@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Column } from './layout';
 
-let ITEM_WIDTH = 250;
+let ITEM_WIDTH = 400;
 
 export default class Player extends Component {
   constructor(props) {
@@ -74,7 +74,7 @@ export default class Player extends Component {
     let artists = '';
     if (this.state.currentTrack) {
       track = this.state.currentTrack.name;
-      artists = this.state.currentTrack.artists.map(a => a.name).join(',');
+      artists = this.state.currentTrack.artists.map(a => a.name).join(', ');
     }
     return (
       <Row justifyContent="start" style={{ width: ITEM_WIDTH, padding: 0 }}>
