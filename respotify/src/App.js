@@ -17,7 +17,7 @@ export default class App extends Component {
       <div className="app-container">
         <div className="left-menu"></div>
         <div className="main">
-          { 'a '.repeat(10 ** 4) }
+          { '何 '.repeat(10 ** 4) }
         </div>
         <Player></Player>
       </div>

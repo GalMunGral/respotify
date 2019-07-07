@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import { Row, Column } from './layout';
 
+let ITEM_WIDTH = 250;
+
 export default class Player extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentTrack: null,
+      paused: true,
+      duration: -1,
+      position: 0
+    }
+  }
+
   componentDidMount() {
     // Register callback for Spotify Web Playback SDK
     window.onSpotifyWebPlaybackSDKReady = () => {  
@@ -19,9 +31,29 @@ export default class Player extends Component {
       this.player.addListener('authentication_error', ({ message }) => { console.error(message); });
       this.player.addListener('account_error', ({ message }) => { console.error(message); });
       this.player.addListener('playback_error', ({ message }) => { console.error(message); });
-      this.player.addListener('player_state_changed', state => { console.log(state); });
       this.player.addListener('ready', ({ device_id }) => { console.log('Ready with Device ID', device_id); });
       this.player.addListener('not_ready', ({ device_id }) => { console.log('Device ID has gone offline', device_id); });
+      this.player.addListener('player_state_changed', state => {
+        // Check if playback has been paused
+        console.log(state);
+        this.setState({
+          currentTrack: state.track_window.current_track,
+          paused: state.paused,
+          duration: state.duration,
+          position: state.position,
+        });
+      });
+
+      // Check playback progress periodically
+      window.setInterval(() => {
+        this.player.getCurrentState().then(state => {
+          if (!state) return;
+          this.setState({
+            duration: state.duration,
+            position: state.position,
+          });
+        });
+      }, 100);
 
       this.player.connect();
     }
@@ -34,47 +66,73 @@ export default class Player extends Component {
   }
 
   _renderThumbnail() {
+    let track = '';
+    let artists = '';
+    if (this.state.currentTrack) {
+      track = this.state.currentTrack.name;
+      artists = this.state.currentTrack.artists.map(a => a.name).join(',');
+    }
     return (
-      <Row justifyContent="start" style={{ width: 100, padding: 0 }}>
-        <div style={{
-          background: 'white',
-          width: 50,
-          height: 50,
-          margin: 10
-        }}></div>
-        <div>
-          <div className="thumbnail-title">Yo</div>
-          <div className="thumbnail-subtitle">hey</div>
-        </div>
+      <Row justifyContent="start" style={{ width: ITEM_WIDTH, padding: 0 }}>
+        {
+          this.state.currentTrack ? (
+            <img className="thumbnail-img"
+              src={this.state.currentTrack.album.images[0].url}
+              alt="Album cover"/>       
+          ) : (
+            <div className="thumbnail-img"></div>
+          )
+        }     
+        <div>{
+          this.state.currentTrack ? (
+            <React.Fragment>
+              <div className="thumbnail-title">{track}</div>
+              <div className="thumbnail-subtitle">{artists}</div>
+            </React.Fragment>
+            
+          ) : (
+            <React.Fragment>
+              <div style={{
+                background: 'lightgray',
+                width: 80, height: 10, margin: 5
+              }}></div>
+              <div style={{
+                background: 'lightgray',
+                width: 50, height: 10, margin: 5
+              }}></div>
+            </React.Fragment>
+          )
+        }</div>
       </Row>
       
     );
   }
 
   _renderPlaybackControl() {
+    const ICON_SIZE = 22;
     return  (
       <Row style={{ marginTop: 5 }}>
         <div onClick={() => this.player.previousTrack()}>
           <i className="material-icons clickable" style={{
-            fontSize: 24
+            fontSize: ICON_SIZE
           }}>skip_previous</i>
         </div>
 
         <div onClick={() => this.player.togglePlay()}>
           <i className="material-icons clickable" style={{
-            fontSize: 24,
-            height: 24,
-            width: 24,
+            fontSize: ICON_SIZE,
+            height: ICON_SIZE,
+            width: ICON_SIZE,
             padding: 5,
             margin: '0 20px',
-            borderRadius: 24 / 2 + 5,
+            borderRadius: ICON_SIZE / 2 + 5,
             border: '1px solid'
-          }}>pause</i>
+          }}>{this.state.paused ? 'play_arrow' : 'pause'}</i>
         </div>
 
         <div onClick={() => this.player.nextTrack()}>
           <i className="material-icons clickable" style={{
-            fontSize: 24,
+            fontSize: ICON_SIZE,
           }}>skip_next</i>
         </div>
       </Row>
@@ -82,13 +140,27 @@ export default class Player extends Component {
   }
 
   _renderProgressBar() {
+    const PROGREE_BAR_WIDTH = 500;
     return (
-      <Row alignItems="start">
-        <div className="small-text">some time</div>
-        <div style={{position: 'relative', margin: 5, height:3, width: 500, background: '#404040'}}>
-          <div style={{position: 'absolute', top: 0, height:3, width: 250, background: 'green'}}></div>
+      <Row alignItems="start" className="progress-bar">
+        <div className="small-text">{
+          this.state.currentTrack
+          ? Math.floor(this.state.position / 1000 / 60) + ':' 
+            + String(Math.floor(this.state.position / 1000 % 60)).padStart(2, '0')
+          : ''
+        }</div>
+        <div className="progress-bar-background"
+          style={{ width: PROGREE_BAR_WIDTH }}>
+          <div className="progress-bar-highlight" style={{
+            width: this.state.position / this.state.duration * PROGREE_BAR_WIDTH
+          }}></div>
         </div>
-        <div className="small-text">total time</div>
+        <div className="small-text">{
+          this.state.currentTrack
+          ? Math.floor(this.state.duration / 1000 / 60) + ':'
+            + String(Math.floor(this.state.duration / 1000 % 60)).padStart(2, '0')
+          : ''
+        }</div>
       </Row>
      
     )
@@ -96,7 +168,7 @@ export default class Player extends Component {
 
   _renderVolumeControl() {
     return <div style={{
-      width: 100,
+      width: ITEM_WIDTH,
     }}>{/* placeholder */}</div>;
   }
 
