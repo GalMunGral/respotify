@@ -75,9 +75,9 @@ export default class Main extends Component {
               {list.artistName}
             </h1>
             <div className="horizontal-scroll" style={{ paddingLeft: LEFT_MARGIN }}>
-              <Row justifyContent="flex-start">
+              <Row justifyContent="flex-start" style={{ padding: 0 }}>
                 {list.items.map((album, i) => (
-                  <Column className="album-cover" key={i}>
+                  <Column className="album-cover" key={i} style={{ padding: 0 }}>
                     <img width={180} height={180} alt={album.name} src={album.images[0].url}/>
                     <h5>{album.name}</h5>
                   </Column>
