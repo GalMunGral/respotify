@@ -20,9 +20,7 @@ export default class Player extends Component {
       this.player = new window.Spotify.Player({
         name: 'Test Player',
         getOAuthToken: callback => {
-          // TODO: Refresh token if needed
-          let searchParams = new URLSearchParams(window.location.search);
-          callback(searchParams.get('access_token'));
+          callback(this.props.accessToken);
         },
         volume: 1
       });
