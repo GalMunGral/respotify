@@ -37,7 +37,8 @@ export default class Main extends Component {
   }
 
   render() {
-    const tabs = ['featured', 'podcasts', 'charts', 'genres & moods', 'new releases', 'discover'];
+    const tabs = ['featured', 'podcasts', 'charts', 
+      'genres & moods', 'new releases', 'discover'];
     return (
       <div className="main">
         <Row justifyContent="center" style={{

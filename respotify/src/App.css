@@ -95,6 +95,9 @@ img.thumbnail-img {
   object-fit: cover;
   margin-right: 20px;
 }
+.album-cover:last-child {
+  margin-right: 80px;
+}
 .album-cover img {
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, .3);
 }
