@@ -5,20 +5,32 @@
   bottom: 0;
   right: 0;
   display: grid;
-  grid-template-columns: 250px auto;
+  grid-template-columns: 220px auto;
   grid-template-rows: auto 90px;
   grid-template-areas:
     "left-menu main"
     "player player";
 }
 .left-menu {
-  background: gray;
+  background: black;
   grid-area: left-menu;
 }
 .main {
-  overflow: scroll;
-  background: lightgray;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: linear-gradient(-45deg, #02080B 10%, #0E537A);
+  padding-bottom: 50px;
+  /* color: transparent; */
   grid-area: main;
+}
+.left-menu h1 {
+  font-size: 25px;
+  margin: 20px 0;
+}
+.left-menu .material-icons {
+  font-size: 30px;
+  height: 30px;
+  margin: 0 10px;
 }
 .player-control {
   background: #282828;
@@ -43,7 +55,9 @@ img.thumbnail-img {
   object-fit: cover;
 }
 .thumbnail-title {
+  font-weight: 500;
   font-size: 14px;
+  margin: 3px 0;
 }
 .thumbnail-subtitle {
   font-size: 12px;
@@ -74,4 +88,24 @@ img.thumbnail-img {
 .progress-bar:hover .bar-highlight,
 .volume-bar:hover .bar-highlight {
   background: #1EB953;
+}
+.album-cover {
+  width: 180px;
+  flex: none; /* Don't grow or shrink */
+  object-fit: cover;
+  margin-right: 20px;
+}
+.album-cover img {
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, .3);
+}
+.album-cover h5 {
+  max-width: 160px;
+  height: 20px;
+}
+.horizontal-scroll {
+  width: 100%; 
+  overflow-x: scroll;
+}
+.horizontal-scroll::-webkit-scrollbar {
+  width: 0;
 }

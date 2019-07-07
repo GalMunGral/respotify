@@ -167,14 +167,14 @@ export default class Player extends Component {
   }
 
   _renderVolumeControl() {
-    const VOLUME_BAR_WIDTH = 100;
+    const VOLUME_BAR_WIDTH = 80;
     return (
       <Row className="volume-bar"
         justifyContent="flex-end"
         alignItems="center"
         style={{ width: ITEM_WIDTH }}
       >
-        <i class="material-icons clickable">volume_up</i>
+        <i className="material-icons clickable">volume_up</i>
         <div
           className="bar-background"
           style={{ width: VOLUME_BAR_WIDTH }}

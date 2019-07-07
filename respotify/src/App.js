@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Player from './Player';
 import { LoginContext } from './index';
+import { Column, Row } from './layout';
+import Player from './Player';
+import Main from './Main';
 
-export default function App() {
-  return (
-    <LoginContext.Consumer>
-      {({ accessToken, refreshToken }) => (
-        <div className="app-container">
-          <div className="left-menu"></div>
-          <div className="main">
-            { '何 '.repeat(10 ** 4) }
+export default class App extends Component {
+
+  render() {
+    return (
+      <LoginContext.Consumer>
+        {({ accessToken, refreshToken }) => (
+          <div className="app-container">
+            
+            <Column alignItems="flex-start" className="left-menu">
+              <Row className="left-menu-title">
+                <i className="material-icons">replay</i>
+                <h1>Respotify</h1>
+              </Row>
+            </Column>
+            
+            <Main accessToken={accessToken}/>
+            <Player accessToken={accessToken}/>
+
           </div>
-          <Player accessToken={accessToken}/>
-        </div>
-      )}
-    </LoginContext.Consumer>
-  );
+        )}
+      </LoginContext.Consumer>
+    );
+  }
 }
