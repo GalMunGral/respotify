@@ -76,33 +76,18 @@ export default class Player extends Component {
       <Row justifyContent="start" style={{ width: ITEM_WIDTH, padding: 0 }}>
         {
           this.state.currentTrack ? (
-            <img className="thumbnail-img"
-              src={this.state.currentTrack.album.images[0].url}
-              alt="Album cover"/>       
-          ) : (
-            <div className="thumbnail-img"></div>
-          )
+            <React.Fragment>
+              <img className="thumbnail-img"
+                src={this.state.currentTrack.album.images[0].url}
+                alt="Album cover"/>   
+              <div>
+                <div className="thumbnail-title">{track}</div>
+                <div className="thumbnail-subtitle">{artists}</div>
+              </div> 
+            </React.Fragment>  
+          ) : null
         }     
-        <div>{
-          this.state.currentTrack ? (
-            <React.Fragment>
-              <div className="thumbnail-title">{track}</div>
-              <div className="thumbnail-subtitle">{artists}</div>
-            </React.Fragment>
-            
-          ) : (
-            <React.Fragment>
-              <div style={{
-                background: 'lightgray',
-                width: 80, height: 10, margin: 5
-              }}></div>
-              <div style={{
-                background: 'lightgray',
-                width: 50, height: 10, margin: 5
-              }}></div>
-            </React.Fragment>
-          )
-        }</div>
+        
       </Row>
       
     );
@@ -149,12 +134,23 @@ export default class Player extends Component {
             + String(Math.floor(this.state.position / 1000 % 60)).padStart(2, '0')
           : ''
         }</div>
-        <div className="progress-bar-background"
-          style={{ width: PROGREE_BAR_WIDTH }}>
+
+        <div
+          className="progress-bar-background" 
+          style={{ width: PROGREE_BAR_WIDTH }}
+          onClick={e => {
+            let x = e.clientX;
+            let element = e.nativeEvent.target;
+            let boundingRect = element.getBoundingClientRect();
+            let percentage = (x - boundingRect.left) / PROGREE_BAR_WIDTH;
+            this.player.seek(this.state.duration * percentage);
+          }}
+        >
           <div className="progress-bar-highlight" style={{
             width: this.state.position / this.state.duration * PROGREE_BAR_WIDTH
           }}></div>
         </div>
+
         <div className="small-text">{
           this.state.currentTrack
           ? Math.floor(this.state.duration / 1000 / 60) + ':'
