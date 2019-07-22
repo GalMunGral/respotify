@@ -1,3 +1,3 @@
 FLASK_APP=app.py \
 FLASK_ENV=development \
-flask run
+flask run --port=3001

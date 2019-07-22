@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 CLIENT_ID = '0972a94bc9e14e4a97687a30a6940c57'
 CLIENT_SECRET = '39684292f5d048f1b4541113224c682c'
-HOST = 'http://localhost:5000'
+HOST = 'http://localhost:3001'
 auth_code_endpoint = '/authorization-code-callback'
 impl_grant_endpoint = '/implicit-grant-callback'
 
@@ -58,7 +58,7 @@ def auth_code_callback():
   params = {
     'grant_type': 'authorization_code',
     'code': auth_code,
-    'redirect_uri': 'http://localhost:5000/authorization-code-callback'
+    'redirect_uri': HOST + '/authorization-code-callback'
   }
   req = Request(url=endpoint, method='POST',
     data=urlencode(params).encode(),
