@@ -20,7 +20,6 @@
   overflow-y: scroll;
   background: linear-gradient(-45deg, #02080B 10%, #0E537A);
   padding-bottom: 50px;
-  /* color: transparent; */
   grid-area: main;
 }
 .left-menu h1 {
@@ -33,6 +32,7 @@
   margin: 0 10px;
 }
 .player-control {
+  width: 100vw;
   background: #282828;
   grid-area: player;
   user-select: none;
