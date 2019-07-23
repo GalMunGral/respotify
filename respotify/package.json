@@ -1,5 +1,6 @@
 {
   "name": "respotify",
+  "homepage": "http://portfolio.herokuapp.com/respotify",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

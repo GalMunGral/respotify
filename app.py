@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 CLIENT_ID = '0972a94bc9e14e4a97687a30a6940c57'
 CLIENT_SECRET = '39684292f5d048f1b4541113224c682c'
-HOST = 'http://localhost:3001'
+BASE_URL = 'http://portfolio-galmungral.herokuapp.com/respotify/api'
+APP_URL = 'http://portfolio-galmungral.herokuapp.com/respotify'
 auth_code_endpoint = '/authorization-code-callback'
 impl_grant_endpoint = '/implicit-grant-callback'
 
@@ -24,7 +25,7 @@ def index():
   params = {
     'client_id': CLIENT_ID,
     'response_type': 'token' if implicit else 'code',
-    'redirect_uri': HOST + (impl_grant_endpoint if implicit else auth_code_endpoint),
+    'redirect_uri': BASE_URL + (impl_grant_endpoint if implicit else auth_code_endpoint),
     'state': randint(0, 1000000),
     'scope': ' '.join(scopes),
     'show_dialog': 'true' 
@@ -58,7 +59,7 @@ def auth_code_callback():
   params = {
     'grant_type': 'authorization_code',
     'code': auth_code,
-    'redirect_uri': HOST + '/authorization-code-callback'
+    'redirect_uri': BASE_URL + '/authorization-code-callback'
   }
   req = Request(url=endpoint, method='POST',
     data=urlencode(params).encode(),
@@ -68,9 +69,9 @@ def auth_code_callback():
 
   with urlopen(req) as f:
     res = json.loads(f.read().decode('utf8'))
-    endpoint = 'http://localhost:3000/?'
+    
     params = {
       'access_token': res['access_token'],
       'refresh_token': res['refresh_token']
     }
-    return redirect(endpoint + urlencode(params))
+    return redirect(APP_URL + '?' + urlencode(params))

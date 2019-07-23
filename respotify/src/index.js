@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const AUTHORIZATION_URL = 'http://127.0.0.1:3001/authorize?implicit=false';
+const AUTHORIZATION_URL = '//portfolio-galmungral.herokuapp.com/respotify/api/authorize?implicit=false';
 
 // Check login status before rendering
 let searchParams = new URLSearchParams(window.location.search);
