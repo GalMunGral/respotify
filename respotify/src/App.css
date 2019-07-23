@@ -32,6 +32,7 @@
   margin: 0 10px;
 }
 .player-control {
+  box-sizing: border-box;
   width: 100vw;
   background: #282828;
   grid-area: player;
