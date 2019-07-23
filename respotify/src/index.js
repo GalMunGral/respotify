@@ -8,9 +8,9 @@ const AUTHORIZATION_URL = '//portfolio-galmungral.herokuapp.com/respotify/api/au
 
 // Check login status before rendering
 let searchParams = new URLSearchParams(window.location.search);
-// if (!searchParams.has('access_token')) {
-//   window.location.assign(AUTHORIZATION_URL);
-// }
+if (!searchParams.has('access_token')) {
+  window.location.assign(AUTHORIZATION_URL);
+}
 
 export const LoginContext = React.createContext();
 
