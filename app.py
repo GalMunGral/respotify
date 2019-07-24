@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 CLIENT_ID = '0972a94bc9e14e4a97687a30a6940c57'
 CLIENT_SECRET = '39684292f5d048f1b4541113224c682c'
-BASE_URL = 'http://portfolio-galmungral.herokuapp.com/respotify/api'
-APP_URL = 'http://portfolio-galmungral.herokuapp.com/respotify'
+BASE_URL = 'https://portfolio-galmungral.herokuapp.com/respotify/api'
+APP_URL = 'https://portfolio-galmungral.herokuapp.com/respotify'
 auth_code_endpoint = '/authorization-code-callback'
 impl_grant_endpoint = '/implicit-grant-callback'
 
