@@ -1,6 +1,3 @@
----
-path: /github/respotify
----
 # ReSpotify
 Recreate Spotify using Spotify API and Spotify Web Playback SDK.
 ## Issues & Fixes
